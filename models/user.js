@@ -20,6 +20,7 @@ const userSchema = new Schema({
         default: "starter"
     },
     token: String,
+    avatarURL: String,
 }, { versionKey: false, timestamps: true });
 
 userSchema.post('save', handleMongooseError);
@@ -59,4 +60,4 @@ const User = model('user', userSchema);
 module.exports = {
     User,
     schemas,
-};
+}; 

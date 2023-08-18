@@ -29,13 +29,13 @@ const register = async (req, res) => {
 
     const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
     
-    const verifyEmail = {
+    const verifyMail = {
         to: email,
         subject: 'Verify email',
         html: `<a target="_blanc" href="${BASE_URL}/users/verify/${verificationToken}">Click verify email</a>`
     };
 
-    await sendEmail(verifyEmail);
+    await sendEmail(verifyMail);
 
     res.status(201).json({
         user: {
@@ -46,8 +46,8 @@ const register = async (req, res) => {
 };
 
 const verifyEmail = async (req, res) => { 
-    const { verificationCode } = req.params;
-    const user = await User.findOne({ verificationCode });
+    const { verificationToken } = req.params;
+    const user = await User.findOne({ verificationToken });
     if (!user) {
         throw HttpError(404, "User not found")
     }
